@@ -1,30 +1,23 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  --- common.h adapted from Angel.h ---
+//  --- Angel.h ---
 //
 //   The main header file for all examples from Angel 6th Edition
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef __COMMON_H__
-#define __COMMON_H__
+#ifndef __ANGEL_H__
+#define __ANGEL_H__
 
-#include <vector>
-#include <list>
-#include <limits>
-#include <string.h>
-#include <assert.h>
-#include <stdio.h>
-#include <algorithm>
+//----------------------------------------------------------------------------
+// 
+// --- Include system headers ---
+//
+
 #include <cmath>
 #include <iostream>
 #include <cstdio>
 #include <stdlib.h>
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#include "pngenc.h"
 
 //  Define M_PI in the case it's not defined in the math header file
 #ifndef M_PI
@@ -58,20 +51,20 @@ static inline bool nearlyEqual(double a, double b, double epsilon){
 
 
 namespace Angel {
-  
-  //  Helper function to load vertex and fragment shader files
-  //GLuint InitShader( const char* vertexShaderFile,
-  //		   const char* fragmentShaderFile );
-  
-  //  Defined constant for when numbers are too small to be used in the
-  //    denominator of a division operation.  This is only used if the
-  //    DEBUG macro is defined.
-  const GLfloat  DivideByZeroTolerance = GLfloat(1.0e-07);
-  
-  //  Degrees-to-radians constant
-  const GLfloat  DegreesToRadians = M_PI / 180.0;
-  const GLfloat  RadiansToDegrees = 180.0/M_PI;
-  
+
+//  Helper function to load vertex and fragment shader files
+//GLuint InitShader( const char* vertexShaderFile,
+//		   const char* fragmentShaderFile );
+
+//  Defined constant for when numbers are too small to be used in the
+//    denominator of a division operation.  This is only used if the
+//    DEBUG macro is defined.
+const GLfloat  DivideByZeroTolerance = GLfloat(1.0e-07);
+
+//  Degrees-to-radians constant 
+const GLfloat  DegreesToRadians = M_PI / 180.0;  
+const GLfloat  RadiansToDegrees = 180.0/M_PI;
+
 }  // namespace Angel
 
 #include "vec.h"
@@ -161,7 +154,7 @@ static void __gluMultMatricesd(const GLdouble a[16], const GLdouble b[16],
   }
 }
 
-static GLint
+GLint
 gluProject(GLdouble objx, GLdouble objy, GLdouble objz,
            const GLdouble modelMatrix[16],
            const GLdouble projMatrix[16],
@@ -196,12 +189,12 @@ gluProject(GLdouble objx, GLdouble objy, GLdouble objz,
   return(GL_TRUE);
 }
 
-static GLint
+GLint
 _gluUnProject(GLdouble winx, GLdouble winy, GLdouble winz,
-              const GLdouble modelMatrix[16],
-              const GLdouble projMatrix[16],
-              const GLint viewport[4],
-              GLdouble *objx, GLdouble *objy, GLdouble *objz)
+             const GLdouble modelMatrix[16],
+             const GLdouble projMatrix[16],
+             const GLint viewport[4],
+             GLdouble *objx, GLdouble *objy, GLdouble *objz)
 {
   double finalMatrix[16];
   double in[4];
@@ -238,7 +231,7 @@ _gluUnProject(GLdouble winx, GLdouble winy, GLdouble winz,
 static char*
 readShaderSource(const char* shaderFile)
 {
-  FILE* fp = fopen(shaderFile, "rb");
+  FILE* fp = fopen(shaderFile, "r");
   
   if ( fp == NULL ) { return NULL; }
   
@@ -289,11 +282,5 @@ static void check_program_link(GLuint program){
   
 }
 
-#include "CheckError.h"
-#include "ObjMesh.h"
-#include "Object.h"
-#include "Trackball.h"
 
-
-
-#endif /* common_h */
+#endif // __ANGEL_H__

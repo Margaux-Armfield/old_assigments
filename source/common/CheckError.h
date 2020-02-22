@@ -14,20 +14,20 @@
 static const char*
 ErrorString( GLenum error )
 {
-    const char*  msg;
-    switch( error ) {
+  const char*  msg;
+  switch( error ) {
 #define Case( Token )  case Token: msg = #Token; break;
-	Case( GL_NO_ERROR );
-	Case( GL_INVALID_VALUE );
-	Case( GL_INVALID_ENUM );
-	Case( GL_INVALID_OPERATION );
-	Case( GL_STACK_OVERFLOW );
-	Case( GL_STACK_UNDERFLOW );
-	Case( GL_OUT_OF_MEMORY );
-#undef Case	
-    }
-
-    return msg;
+      Case( GL_NO_ERROR );
+      Case( GL_INVALID_VALUE );
+      Case( GL_INVALID_ENUM );
+      Case( GL_INVALID_OPERATION );
+      Case( GL_STACK_OVERFLOW );
+      Case( GL_STACK_UNDERFLOW );
+      Case( GL_OUT_OF_MEMORY );
+#undef Case
+  }
+  
+  return msg;
 }
 
 //----------------------------------------------------------------------------
@@ -35,12 +35,12 @@ ErrorString( GLenum error )
 static void
 _CheckError( const char* file, int line )
 {
-    GLenum  error = glGetError();
-
-    do {
-	fprintf( stderr, "[%s:%d] %s\n", file, line, ErrorString(error) );
-    } while ((error = glGetError()) != GL_NO_ERROR );
-	
+  GLenum  error = glGetError();
+  
+  do {
+    fprintf( stderr, "[%s:%d] %s\n", file, line, ErrorString(error) );
+  } while ((error = glGetError()) != GL_NO_ERROR );
+  
 }
 
 //----------------------------------------------------------------------------

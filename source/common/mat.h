@@ -7,7 +7,7 @@
 #ifndef __ANGEL_MAT_H__
 #define __ANGEL_MAT_H__
 
-#include "vec.h"
+#include "common.h"
 
 namespace Angel {
   

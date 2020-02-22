@@ -295,6 +295,12 @@ vec3 cross(const vec3& a, const vec3& b )
 		 a.z * b.x - a.x * b.z,
 		 a.x * b.y - a.y * b.x );
 }
+  
+inline
+vec3 reflect( const vec3& I, const vec3& N ) {
+    return I - 2.0 * dot(N, I) * N;
+}
+
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -449,6 +455,11 @@ vec3 cross(const vec4& a, const vec4& b )
     return vec3( a.y * b.z - a.z * b.y,
 		 a.z * b.x - a.x * b.z,
 		 a.x * b.y - a.y * b.x );
+}
+  
+inline
+vec4 reflect( const vec4& I, const vec4& N ) {
+    return I - 2.0 * dot(N, I) * N;
 }
 
 //----------------------------------------------------------------------------

@@ -1,5 +1,11 @@
-#include "common.h"
+//////////////////////////////////////////////////////////////////////////////
+//
+//  --- ObjMesh.cpp ---
+//  Created by Brian Summa
+//
+//////////////////////////////////////////////////////////////////////////////
 
+#include "common.h"
 
 bool Mesh::loadOBJ(const char * path){
   std::vector< unsigned int > vertexIndices, uvIndices, normalIndices;
@@ -134,6 +140,54 @@ bool Mesh::loadOBJ(const char * path){
                      1.0/scale)*
   Translate(-center);  //Orient Model About Center
   
+  
+  return true;
+}
+
+bool Mesh::makeSubdivisionSphere(int steps){
+  
+  box_min = vec3(-1,-1,-1);
+  box_max = vec3(1,1,1);
+  
+  
+  std::list < SphereTriangle > tris;
+  
+  tris.push_back(SphereTriangle(vec3(0.57735, 0.57735, 0.57735),    vec3(-0.57735, 0.57735, -0.57735), vec3(0.57735, 0.57735, -0.57735)));
+  tris.push_back(SphereTriangle(vec3(-0.57735, 0.57735, -0.57735),  vec3(0.57735, 0.57735, 0.57735), vec3(-0.57735, 0.57735, 0.57735)));
+  tris.push_back(SphereTriangle(vec3(0.57735, -0.57735, 0.57735),   vec3(-0.57735, -0.57735, -0.57735), vec3(0.57735, -0.57735, -0.57735)));
+  tris.push_back(SphereTriangle(vec3(-0.57735, -0.57735, -0.57735), vec3(0.57735, -0.57735, 0.57735), vec3(-0.57735, -0.57735, 0.57735)));
+  tris.push_back(SphereTriangle(vec3(0.57735, 0.57735, 0.57735),    vec3(0.57735, -0.57735, -0.57735), vec3(0.57735, 0.57735, -0.57735)));
+  tris.push_back(SphereTriangle(vec3(0.57735, -0.57735, -0.57735),  vec3(0.57735, 0.57735, 0.57735), vec3(0.57735, -0.57735, 0.57735)));
+  tris.push_back(SphereTriangle(vec3(-0.57735, 0.57735, 0.57735),   vec3(-0.57735, -0.57735, -0.57735), vec3(-0.57735, 0.57735, -0.57735)));
+  tris.push_back(SphereTriangle(vec3(-0.57735, -0.57735, -0.57735), vec3(-0.57735, 0.57735, 0.57735), vec3(-0.57735, -0.57735, 0.57735)));
+  tris.push_back(SphereTriangle(vec3(0.57735, 0.57735, 0.57735),    vec3(-0.57735, -0.57735, 0.57735), vec3(0.57735, -0.57735, 0.57735)));
+  tris.push_back(SphereTriangle(vec3(-0.57735, -0.57735, 0.57735),  vec3(0.57735, 0.57735, 0.57735), vec3(-0.57735, 0.57735, 0.57735)));
+  tris.push_back(SphereTriangle(vec3(0.57735, 0.57735, -0.57735),   vec3(-0.57735, -0.57735, -0.57735), vec3(0.57735, -0.57735, -0.57735)));
+  tris.push_back(SphereTriangle(vec3(-0.57735, -0.57735, -0.57735), vec3(0.57735, 0.57735, -0.57735), vec3(-0.57735, 0.57735, -0.57735)));
+  
+  for(unsigned int s=0; s < steps; s++){
+    std::list< SphereTriangle > newTris;
+    float l = length(tris.begin()->a);
+    for(std::list<SphereTriangle>::iterator i = tris.begin(); i != tris.end(); ++i) { // go through all triangles
+      vec3 mid = (i->a + i->b) * 0.5f; // point betwenn points A and B
+      mid = setLength(mid, l); // put in on the sphere
+      newTris.push_back(SphereTriangle(i->b, i->c, mid)); // remember new triangles
+      newTris.push_back(SphereTriangle(i->a, i->c, mid));
+    }
+    tris.swap(newTris); // use new set of triangles;
+  }
+  
+  
+  
+  for(std::list<SphereTriangle>::iterator i = tris.begin(); i != tris.end(); ++i) {
+    vertices.push_back(vec4(normalize(i->a), 1.0));
+    vertices.push_back(vec4(normalize(i->b), 1.0));
+    vertices.push_back(vec4(normalize(i->c), 1.0));
+    
+    normals.push_back(normalize(i->a));
+    normals.push_back(normalize(i->b));
+    normals.push_back(normalize(i->c));
+  }
   
   return true;
 }

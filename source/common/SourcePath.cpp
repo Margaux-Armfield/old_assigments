@@ -6,4 +6,4 @@
 
 #include "SourcePath.h"
 
-std::string source_path = "/Users/margauxarmfield/Desktop/Cmps/CmpsGraphics/assignment_3";
+std::string source_path = "/Users/margauxarmfield/Desktop/Cmps/CmpsGraphics/raytracing_template";

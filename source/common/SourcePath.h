@@ -1,15 +1,16 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  --- shader.h ---
+//  --- SourcePath.h ---
+//  Created by Brian Summa
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef __SHADER_H__
-#define __SHADER_H__
+#ifndef __SOURCEPATH_H__
+#define __SOURCEPATH_H__
 
 #include <string>
 
 extern std::string source_path;
 
 
-#endif // __SHADER_H__
+#endif // __SOURCEPATH_H__
